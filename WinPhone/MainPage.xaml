@@ -9,6 +9,22 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <StackPanel Orientation="Vertical">
+            <Button Click="Button_Click">Debug Sensors</Button>
+            <Button Name="StartStopBufferButton" Click="StartStopBufferButton_Click">Start Debug Buffer</Button>
+             <StackPanel Orientation="Horizontal">
+                <TextBlock>Acellerometer Status: </TextBlock>
+                <TextBlock Name="SensorStatusTextBlock">Initializing...</TextBlock>
+            </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Acellerometer Reading:</TextBlock>
+                <TextBlock Grid.Row="1" Name="AcellerometerReadingTextBlock" Text="Waiting..."></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Gyro Reading:</TextBlock>
+                <TextBlock Grid.Row="1" Name="GyroReadingTextBlock" Text="Waiting..."></TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

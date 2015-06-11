@@ -1,27 +1,15 @@
 ﻿using Microsoft.Band;
+using Microsoft.Band.Sensors;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
+using System.Linq;
+using Windows.UI.Core;
 
 namespace WinPhone
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
@@ -31,25 +19,24 @@ namespace WinPhone
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: Prepare page for display here.
-
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
-            StartBandMonitor();
+            await StartBandMonitor();
         }
 
-        private async void StartBandMonitor()
+        private bool buffering = false;
+
+        private List<IBandGyroscopeReading> _gyroscopeBuffer = new List<IBandGyroscopeReading>();
+
+        IBandClient _bandClient;
+
+        private BandStreamProcessor.WaveGestureDetector _waveGesture = new BandStreamProcessor.WaveGestureDetector();
+
+        private async Task<int> StartBandMonitor()
         {
+            _waveGesture.WaveDetected += _waveGesture_WaveDetected;
+            _waveGesture.ReverseWaveDetected += _waveGesture_ReverseWaveDetected;
+
             // Get the list of Microsoft Bands paired to the phone.
             var pairedBands = await BandClientManager.Instance.GetBandsAsync();
             if (pairedBands.Length < 1)
@@ -58,14 +45,66 @@ namespace WinPhone
             }
 
             // Connect to Microsoft Band.
-            using (var bandClient = await BandClientManager.Instance.ConnectAsync(pairedBands[0]))
-            {
-                int samplesReceived = 0; // the number of Accelerometer samples received
+            _bandClient = await BandClientManager.Instance.ConnectAsync(pairedBands[0]);
 
-                // Subscribe to Accelerometer data.
-                bandClient.SensorManager.Accelerometer.ReadingChanged += (s, args) => { samplesReceived++; };
-                await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
+            var sensors = _bandClient.SensorManager;
+
+            sensors.Gyroscope.ReportingInterval = sensors.Gyroscope.SupportedReportingIntervals.Min();
+
+            sensors.Gyroscope.ReadingChanged += (s, args) =>
+            {
+                _gyroscopeBuffer.Add(args.SensorReading);
+                _waveGesture.AddAccelerometerReading(args.SensorReading);
+            };
+
+            SensorStatusTextBlock.Text = "Initialized!";
+            Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Green);
+
+            await sensors.Gyroscope.StartReadingsAsync();
+
+            return 0;
+        }
+        
+        private async void _waveGesture_WaveDetected(object sender, EventArgs e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.White);
+            });
+        }
+
+        private async void _waveGesture_ReverseWaveDetected(object sender, EventArgs e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Blue);
+            });
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+        
+        private void StartStopBufferButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if(buffering)
+            {
+                StartStopBufferButton.Content = "Start Buffering";
+
+                string s = "";
+                foreach(var grec in _gyroscopeBuffer.ToArray())
+                {
+                    s += string.Format("{0},{1},{2}\n", grec.AccelerationX, grec.AccelerationY, grec.AccelerationZ);
+                }
             }
+            else
+            {
+                StartStopBufferButton.Content = "Stop Buffering";
+                _gyroscopeBuffer.Clear();
+            }
+
+            buffering = !buffering;
         }
     }
 }

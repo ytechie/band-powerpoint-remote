@@ -127,6 +127,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\band-stream-processor\BandStreamProcessor\BandStreamProcessor.csproj">
+      <Project>{8c399495-635a-475e-9ad8-e95a64d49b10}</Project>
+      <Name>BandStreamProcessor</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
