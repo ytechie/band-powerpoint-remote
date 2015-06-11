@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System.Linq;
 using Windows.UI.Core;
+using System.Net.Http;
+using System.Diagnostics;
 
 namespace WinPhone
 {
@@ -25,8 +27,6 @@ namespace WinPhone
         }
 
         private bool buffering = false;
-
-        private List<IBandGyroscopeReading> _gyroscopeBuffer = new List<IBandGyroscopeReading>();
 
         IBandClient _bandClient;
 
@@ -53,7 +53,6 @@ namespace WinPhone
 
             sensors.Gyroscope.ReadingChanged += (s, args) =>
             {
-                _gyroscopeBuffer.Add(args.SensorReading);
                 _waveGesture.AddAccelerometerReading(args.SensorReading);
             };
 
@@ -67,6 +66,11 @@ namespace WinPhone
         
         private async void _waveGesture_WaveDetected(object sender, EventArgs e)
         {
+            Debug.WriteLine("Next Slide");
+
+            var httpClient = new HttpClient();
+            await httpClient.GetAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/111");
+
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.White);
@@ -75,6 +79,11 @@ namespace WinPhone
 
         private async void _waveGesture_ReverseWaveDetected(object sender, EventArgs e)
         {
+            Debug.WriteLine("Prev Slide");
+
+            var httpClient = new HttpClient();
+            await httpClient.GetAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/111");
+
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Blue);
@@ -84,27 +93,6 @@ namespace WinPhone
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-        }
-        
-        private void StartStopBufferButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            if(buffering)
-            {
-                StartStopBufferButton.Content = "Start Buffering";
-
-                string s = "";
-                foreach(var grec in _gyroscopeBuffer.ToArray())
-                {
-                    s += string.Format("{0},{1},{2}\n", grec.AccelerationX, grec.AccelerationY, grec.AccelerationZ);
-                }
-            }
-            else
-            {
-                StartStopBufferButton.Content = "Stop Buffering";
-                _gyroscopeBuffer.Clear();
-            }
-
-            buffering = !buffering;
         }
     }
 }
