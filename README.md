@@ -4,6 +4,8 @@ A prototype for interpreting gestures from the band and advancing PowerPoint sli
 
 Still a work in progress.
 
+![Solution Architecture](architecture.png)
+
 ## License
 
 Microsoft Developer Experience & Evangelism
