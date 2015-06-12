@@ -16,9 +16,8 @@ namespace WinPhone
     {
         public MainPage()
         {
-            this.InitializeComponent();
-
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
