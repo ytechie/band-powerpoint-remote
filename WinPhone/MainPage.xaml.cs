@@ -69,8 +69,8 @@ namespace WinPhone
             Debug.WriteLine("Moving to next Slide");
 
             var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/111", new StringContent(""));
-            //var response = await httpClient.GetAsync("http://localhost:3283/powerpoint/nextslide/111");
+            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/1234", new StringContent(""));
+            //var response = await httpClient.PostAsync("http://localhost:3283/powerpoint/nextslide/1234", new StringContent(""));
 
             Debug.WriteLine("Send signal to move to next Slide. Response: " + response.StatusCode);
 
@@ -85,8 +85,8 @@ namespace WinPhone
             Debug.WriteLine("Moving to prev Slide");
 
             var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/111", new StringContent(""));
-            //var response = await httpClient.GetAsync("http://localhost:3283/powerpoint/prevslide/111");
+            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/1234", new StringContent(""));
+            //var response = await httpClient.PostAsync("http://localhost:3283/powerpoint/prevslide/1234", new StringContent(""));
 
             Debug.WriteLine("Send signal to move to prev Slide. Response: " + response.StatusCode);
 
