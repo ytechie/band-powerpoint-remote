@@ -66,10 +66,13 @@ namespace WinPhone
         
         private async void _waveGesture_WaveDetected(object sender, EventArgs e)
         {
-            Debug.WriteLine("Next Slide");
+            Debug.WriteLine("Moving to next Slide");
 
             var httpClient = new HttpClient();
-            await httpClient.GetAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/111");
+            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/111", new StringContent(""));
+            //var response = await httpClient.GetAsync("http://localhost:3283/powerpoint/nextslide/111");
+
+            Debug.WriteLine("Send signal to move to next Slide. Response: " + response.StatusCode);
 
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -79,10 +82,13 @@ namespace WinPhone
 
         private async void _waveGesture_ReverseWaveDetected(object sender, EventArgs e)
         {
-            Debug.WriteLine("Prev Slide");
+            Debug.WriteLine("Moving to prev Slide");
 
             var httpClient = new HttpClient();
-            await httpClient.GetAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/111");
+            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/111", new StringContent(""));
+            //var response = await httpClient.GetAsync("http://localhost:3283/powerpoint/prevslide/111");
+
+            Debug.WriteLine("Send signal to move to prev Slide. Response: " + response.StatusCode);
 
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
