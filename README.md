@@ -1,4 +1,4 @@
-# band-powerpoint-remote
+# Band PowerPoint Remote
 
 A prototype for interpreting gestures from the band and advancing PowerPoint slides. This project contains the phone application.
 
@@ -7,6 +7,16 @@ Data from the gyroscope is processed using Reactive Extensions within the [Band 
 The resulting next/prev commands are sent to a [WebAPI and PowerPoint web proxy](https://github.com/ytechie/powerpoint-remote-proxy).
 
 ![Solution Architecture](architecture.png)
+
+## Development
+
+To set up your development environment, for now,  you'll need to pull in some additional projects. The easiest way to pull in all of the needed projects is with the following clone commands:
+
+    git clone https://github.com/ytechie/powerpoint-remote-proxy.git
+    git clone https://github.com/ytechie/band-stream-processor.git
+    git clone https://github.com/ytechie/band-powerpoint-remote.git
+
+The is a .sln in the band-powerpoint-remote project/folder.
 
 ## License
 
