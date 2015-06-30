@@ -27,6 +27,7 @@ namespace BandRemoteApp
 
             // Connect to Microsoft Band.
             _bandClient = await BandClientManager.Instance.ConnectAsync(pairedBands.First());
+            Debug.WriteLine("Band found");
 
             var sensors = _bandClient.SensorManager;
 
@@ -40,7 +41,8 @@ namespace BandRemoteApp
             //SensorStatusTextBlock.Text = "Initialized!";
             //Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Green);
 
-            await sensors.Gyroscope.StartReadingsAsync(Microsoft.Band.Portable.Sensors.BandSensorSampleRate.Ms16);
+            await sensors.Accelerometer.StartReadingsAsync(Microsoft.Band.Portable.Sensors.BandSensorSampleRate.Ms16);
+            Debug.WriteLine("Sensor reads requested");
 
             return 0;
         }
