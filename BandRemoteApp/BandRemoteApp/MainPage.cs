@@ -64,7 +64,7 @@ namespace BandRemoteApp
             base.OnAppearing();
 
             _bandManager = new BandManager();
-            var result = _bandManager.StartBandMonitor().Result;
+            var result = _bandManager.StartBandMonitor().ConfigureAwait(false);
         }
     }
 }
