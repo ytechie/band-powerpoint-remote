@@ -43,7 +43,7 @@ namespace BandPowerpointRemote
             sensors.Accelerometer.ReadingChanged += (s, args) =>
             {
                 _waveGesture.AddAccelerometerReading(args.SensorReading);
-                EventHubsInterface.SendAccelerometerReading(args.SensorReading);
+                //EventHubsInterface.SendAccelerometerReading(args.SensorReading);
             };
 
             //SensorStatusTextBlock.Text = "Initialized!";
