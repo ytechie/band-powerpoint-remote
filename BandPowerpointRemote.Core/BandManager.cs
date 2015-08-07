@@ -28,7 +28,7 @@ namespace BandPowerpointRemote
             var pairedBands = await BandClientManager.Instance.GetPairedBandsAsync();
             if (pairedBands.Count() < 1)
             {
-				_parentPage.DisplayAlert ("No Bands", "Unable to find a Band to connect to.", "Ok");
+				await _parentPage.DisplayAlert ("No Bands", "Unable to find a Band to connect to.", "Ok");
 				return 0;
             }
 
@@ -43,6 +43,7 @@ namespace BandPowerpointRemote
             sensors.Accelerometer.ReadingChanged += (s, args) =>
             {
                 _waveGesture.AddAccelerometerReading(args.SensorReading);
+                EventHubsInterface.SendAccelerometerReading(args.SensorReading);
             };
 
             //SensorStatusTextBlock.Text = "Initialized!";

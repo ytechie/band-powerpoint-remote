@@ -17,7 +17,7 @@ namespace BandPowerpointRemote
 
         public WaveGestureDetector()
         {
-            var wave = rx.Where(x => x.AccelerationY > 3);
+            var wave = rx.Where(x => x.AccelerationZ > 3);
             wave.Subscribe(x =>
             {
                 if (DateTime.UtcNow.Subtract(_lastEvent) > TimeSpan.FromSeconds(1.0))
@@ -32,7 +32,7 @@ namespace BandPowerpointRemote
                 }
             });
 
-            var reverseWave = rx.Where(x => x.AccelerationY < -3);
+            var reverseWave = rx.Where(x => x.AccelerationZ < -3);
             reverseWave.Subscribe(x =>
             {
                 if (DateTime.UtcNow.Subtract(_lastEvent) > TimeSpan.FromSeconds(1.0))
