@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.Band.Portable;
-using System.Net.Http;
 
 namespace BandPowerpointRemote
 {
@@ -11,6 +10,10 @@ namespace BandPowerpointRemote
     {
 		private MainPage _parentPage;
         private BandClient _bandClient;
+
+		public event EventHandler MovePrevGesture;
+		public event EventHandler MoveNextGesture;
+
 
         private WaveGestureDetector _waveGesture = new WaveGestureDetector();
 
@@ -21,8 +24,16 @@ namespace BandPowerpointRemote
 
         public async Task<int> StartBandMonitor()
         {
-            _waveGesture.WaveDetected += _waveGesture_WaveDetected;
-            _waveGesture.ReverseWaveDetected += _waveGesture_ReverseWaveDetected;
+			_waveGesture.WaveDetected += (sender, e) => {
+				var eh = MoveNextGesture;
+				if(eh != null)
+					eh(sender, e);
+			};
+			_waveGesture.ReverseWaveDetected += (sender, e) => {
+				var eh = MovePrevGesture;
+				if(eh != null)
+					eh(sender, e);
+			};
 
             // Get the list of Microsoft Bands paired to the phone.
             var pairedBands = await BandClientManager.Instance.GetPairedBandsAsync();
@@ -46,35 +57,21 @@ namespace BandPowerpointRemote
                 //EventHubsInterface.SendAccelerometerReading(args.SensorReading);
             };
 
+			sensors.Gyroscope.ReadingChanged += (sender, e) => 
+			{
+				_waveGesture.AddGyroscopeReading(e.SensorReading);
+			};
+
             //SensorStatusTextBlock.Text = "Initialized!";
             //Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.Green);
-
             await sensors.Accelerometer.StartReadingsAsync(Microsoft.Band.Portable.Sensors.BandSensorSampleRate.Ms16);
+			//await sensors.Gyroscope.StartReadingsAsync (Microsoft.Band.Portable.Sensors.BandSensorSampleRate.Ms16);
+
             Debug.WriteLine("Sensor reads requested");
 
             return 0;
         }
 
-        private async void _waveGesture_WaveDetected(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Moving to next Slide");
 
-            var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/nextslide/1234", new StringContent(""));
-            //var response = await httpClient.PostAsync("http://localhost:3283/powerpoint/nextslide/1234", new StringContent(""));
-
-            Debug.WriteLine("Send signal to move to next Slide. Response: " + response.StatusCode);
-        }
-
-        private async void _waveGesture_ReverseWaveDetected(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Moving to prev Slide");
-
-            var httpClient = new HttpClient();
-            var response = await httpClient.PostAsync("http://powerpointremoteproxy.azurewebsites.net/powerpoint/prevslide/1234", new StringContent(""));
-            //var response = await httpClient.PostAsync("http://localhost:3283/powerpoint/prevslide/1234", new StringContent(""));
-
-            Debug.WriteLine("Send signal to move to prev Slide. Response: " + response.StatusCode);
-        }
     }
 }
