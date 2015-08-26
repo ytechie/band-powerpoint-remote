@@ -36,7 +36,7 @@ namespace WinPhone
 
         IBandClient _bandClient;
 
-        private BandStreamProcessor.WaveGestureDetector _waveGesture = new BandStreamProcessor.WaveGestureDetector();
+        private WaveGestureDetector _waveGesture = new WaveGestureDetector();
 
         private async Task<int> StartBandMonitor()
         {

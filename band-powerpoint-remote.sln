@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BandPowerpointRemote.Core",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPhone", "WinPhone\WinPhone.csproj", "{91FEADE2-2518-4112-9736-6738106FACBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BandStreamProcessor", "..\band-stream-processor\BandStreamProcessor\BandStreamProcessor.csproj", "{8C399495-635A-475E-9AD8-E95A64D49B10}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,34 +162,6 @@ Global
 		{91FEADE2-2518-4112-9736-6738106FACBF}.Release|x86.ActiveCfg = Release|x86
 		{91FEADE2-2518-4112-9736-6738106FACBF}.Release|x86.Build.0 = Release|x86
 		{91FEADE2-2518-4112-9736-6738106FACBF}.Release|x86.Deploy.0 = Release|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|ARM.ActiveCfg = Debug|ARM
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|ARM.Build.0 = Debug|ARM
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|x64.Build.0 = Debug|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|x86.ActiveCfg = Debug|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Debug|x86.Build.0 = Debug|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|ARM.ActiveCfg = Release|ARM
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|ARM.Build.0 = Release|ARM
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|iPhone.Build.0 = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|Mixed Platforms.Build.0 = Release|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|x64.ActiveCfg = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|x64.Build.0 = Release|Any CPU
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|x86.ActiveCfg = Release|x86
-		{8C399495-635A-475E-9AD8-E95A64D49B10}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
